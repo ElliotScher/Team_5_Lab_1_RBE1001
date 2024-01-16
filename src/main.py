@@ -19,9 +19,9 @@ leftMotor = Motor(Ports.PORT11, True)
 
 GEAR_RATIO = 60.0/12.0
 
-leftMotor.spin_for(DirectionType.FORWARD, 1 * GEAR_RATIO, TURNS, 5 * GEAR_RATIO, RPM, True)
+leftMotor.spin_for(DirectionType.FORWARD, 1 * GEAR_RATIO, TURNS, 30 * GEAR_RATIO, RPM, True)
 
-rightMotor.spin_for(DirectionType.FORWARD, 1 * GEAR_RATIO, TURNS, 5 * GEAR_RATIO, RPM, True)
+rightMotor.spin_for(DirectionType.FORWARD, 1 * GEAR_RATIO, TURNS, 30 * GEAR_RATIO, RPM, True)
 
-leftMotor.spin_for(DirectionType.FORWARD, 1 * GEAR_RATIO, TURNS, 5 * GEAR_RATIO, RPM, False)
-rightMotor.spin_for(DirectionType.FORWARD, 1 * GEAR_RATIO, TURNS, 5 * GEAR_RATIO, RPM, False)
+leftMotor.spin_for(DirectionType.FORWARD, 1 * GEAR_RATIO, TURNS, 30 * GEAR_RATIO, RPM, False)
+rightMotor.spin_for(DirectionType.FORWARD, 1 * GEAR_RATIO, TURNS, 30 * GEAR_RATIO, RPM, False)
