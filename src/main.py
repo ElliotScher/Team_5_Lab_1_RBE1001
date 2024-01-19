@@ -17,14 +17,23 @@ brain=Brain()
 
 rightMotor = Motor(Ports.PORT15, False)
 leftMotor = Motor(Ports.PORT11, True)
+armMotor = Motor(Ports.PORT20, False)
 rangeFinder = Sonar(brain.three_wire_port.a)
 bumpSensor = Bumper(brain.three_wire_port.c)
 lineFollower = Line(brain.three_wire_port.d)
 
-GEAR_RATIO = 60.0/12.0
+class State:
+    def __init__(self) -> None:
+        self.STATE = 0
 
-def distanceToTurns(distance):
-    return distance * GEAR_RATIO / (4 * pi)
+    def setState(self, state):
+        self.STATE = state
+    
+    def getState(self):
+        return self.STATE
+
+# def distanceToTurns(distance):
+#     return distance * GEAR_RATIO / (4 * pi)
 
 # motor testing
 # leftMotor.spin_for(DirectionType.FORWARD, distanceToTurns(24), TURNS, 30 * GEAR_RATIO, RPM, False)
@@ -44,7 +53,30 @@ def distanceToTurns(distance):
 #         break
 #         exit
 
-# testing reflectivity sensor
+# # testing reflectivity sensor
 # while True:
 #     sleep(1)
 #     print(lineFollower.reflectivity())
+
+GEAR_RATIO = 60.0/12.0
+TIMES_SEEN = 0
+state = 0
+
+def homingSequence():
+    global state
+    armMotor.spin(DirectionType.REVERSE, 5 * GEAR_RATIO, RPM)
+    if bumpSensor.pressing():
+        armMotor.stop(BRAKE)
+        armMotor.set_position(0, TURNS)
+        armMotor.spin_for(DirectionType.FORWARD, 75 * GEAR_RATIO, DEGREES, True)
+        state = 1
+
+
+while True:
+    if state == 0:
+        homingSequence()
+
+    if state == 1:
+        leftMotor.spin(DirectionType.FORWARD, 5 * GEAR_RATIO, RPM)
+        rightMotor.spin(DirectionType.FORWARD, 5 * GEAR_RATIO, RPM)
+
